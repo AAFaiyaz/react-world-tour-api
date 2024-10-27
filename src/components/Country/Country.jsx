@@ -1,37 +1,30 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import "./Country.css";
-const country = ({ country, handleVisitedCountry, handleVisitedFlags }) => {
-  const { name, flags, area, population, cca3 } = country;
+
+const Country = ({ country, handleMarkVisited, handleVisitedFlags }) => {
+  const { name, flags, population, area, cca3 } = country;
+
   const [visited, setVisited] = useState(false);
+
   const handleVisited = () => {
     setVisited(!visited);
   };
 
-  //   const passWithParams = () => handleVisitedCountry(country);
-
   return (
     <div className={`country ${visited && "visited"}`}>
-      <h3>Name: {name.common}</h3>
+      <h3 style={{ color: "green" }}>Name: {name.common}</h3>
       <img src={flags.png} alt="" />
-      <p>Post Code: {area}</p>
-      <p>Population: {population / 1000000}M</p>
-      <p>
-        <small>Code: {cca3}</small>
-      </p>
-      <button onClick={() => handleVisitedFlags(country.flags)}>
-        Visited Flags
+      <p>Population: {population}</p>
+      <p>Area: {area}</p>
+      <p>Code: {cca3}</p>
+      <button onClick={() => handleMarkVisited(country)}>Mark Visited</button>
+      <button onClick={() => handleVisitedFlags(country.flags.png)}>
+        Add Flag
       </button>
-      <br />
-      <button onClick={() => handleVisitedCountry(country)}>
-        Mark as visited
-      </button>
-      <br />
-      <button onClick={handleVisited}>
-        {visited ? "visited" : "Want to visit"}
-      </button>
-      {visited && " I have visited this country"}
+      <button onClick={handleVisited}>Visited</button>
+      {visited && "I have Visited tgghis country"}
     </div>
   );
 };
 
-export default country;
+export default Country;

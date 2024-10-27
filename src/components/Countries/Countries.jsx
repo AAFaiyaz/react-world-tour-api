@@ -1,12 +1,13 @@
+import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import Country from "../Country/Country";
+import Country from "../Country/country";
 import "./Countries.css";
 
 const Countries = () => {
   const [countries, setCountries] = useState([]);
   const [visitedCountries, setVisitedCountries] = useState([]);
-  const [visistedFlags, setVisitedFlags] = useState([]);
+  const [visitgedFlags, setVisitedFlags] = useState([]);
 
   useEffect(() => {
     fetch("https://restcountries.com/v3.1/all")
@@ -14,32 +15,19 @@ const Countries = () => {
       .then((data) => setCountries(data));
   }, []);
 
-  const handleVisitedCountry = (country) => {
-    console.log("add this to your visited country");
-    // visitedCountries.push(country);
+  const handleMarkVisited = (country) => {
     const newVisitedCountries = [...visitedCountries, country];
     setVisitedCountries(newVisitedCountries);
   };
-
   const handleVisitedFlags = (flags) => {
-    // console.log("flag adding");
-    // console.log(flags);
-    const newVisitedFlags = [...visistedFlags, flags];
-    setVisitedFlags(newVisitedFlags);
+    const newFlag = [...visitgedFlags, flags];
+    setVisitedFlags(newFlag);
   };
 
+  // remove item from an array in a astatge
   return (
     <div>
-      <h3>Countries : {countries.length}</h3>
-      {/* Visited Flags */}
-      <div className="flag-container">
-        <h5>Visited Flags: {visistedFlags.length}</h5>
-
-        {visistedFlags.map((flags, idx) => (
-          <img key={idx} src={flags.png} alt="" />
-        ))}
-      </div>
-      {/* visited countries */}
+      <h3>Countris: {countries.length}</h3>
       <div>
         <h5>Visited Countries: {visitedCountries.length}</h5>
         <ul>
@@ -48,14 +36,19 @@ const Countries = () => {
           ))}
         </ul>
       </div>
-      {/* display countries */}
+      <div className="flag-container">
+        {visitgedFlags.length}
+        {visitgedFlags.map((flag, idx) => (
+          <img key={idx} src={flag} />
+        ))}
+      </div>
       <div className="country-container">
         {countries.map((country) => (
           <Country
             key={country.cca3}
-            handleVisitedCountry={handleVisitedCountry}
-            handleVisitedFlags={handleVisitedFlags}
             country={country}
+            handleMarkVisited={handleMarkVisited}
+            handleVisitedFlags={handleVisitedFlags}
           ></Country>
         ))}
       </div>
